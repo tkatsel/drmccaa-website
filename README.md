@@ -35,6 +35,19 @@ Our main issues have been:
 * Maintenance - how do we make sure that the website is properly maintained and remains useful?
 * Costs - if we host a website with proper authentication, how do we fund it?
 
-## Current html example
+These three are examined in [Hosting and security options](Docs/hosting-and-security-options.md), which compares seven routes on cost, risk and how much work each one puts on volunteers.
 
-If you open the html file in a browser you will see a draft site from Claude that can be used as inspiration. 
+## What is in this repository
+
+| | |
+|---|---|
+| [Docs/prototype/](Docs/prototype/) | A clickable draft of the site, to be used as inspiration rather than as a finished design. Open `index.html` in a browser — no install, no build step. It implements the structure sketched above, simulates the members' gate, and can show or hide the outstanding planning questions. See [its README](Docs/prototype/README.md) for how to use it in a meeting. |
+| [Docs/hosting-and-security-options.md](Docs/hosting-and-security-options.md) | Hosting and security options compared, with indicative costs, pros, cons and risks. Ends with the decisions needed before we can proceed. |
+| [Docs/Meetings/](Docs/Meetings/) | Notes from planning sessions. |
+| [Docs/src/](Docs/src/) | Diagrams and workshop outputs referenced above. |
+
+Neither the mock-up nor the options document commits us to anything. Both exist so the Board and the committees can react to something concrete rather than to a description.
+
+## Where we are
+
+The open decisions are kept in one place: [§9 of the hosting and security document](Docs/hosting-and-security-options.md#9-decisions-needed-to-proceed). The two that unblock the most are whether the association can be validated as a nonprofit, and roughly how many alumni would be given access.
