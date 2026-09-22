@@ -1,6 +1,20 @@
 # DRMCCAA Website
 
-This repository is for the planning of a website for the DRMCCA Alumni Association.
+This repository is for the planning of a website for the DRMCCA Alumni Association. 
+
+```mermaid
+graph TD
+    A[Website purpose] --> B[One-stop shop for Associtation info]
+    A --> C[Transparency]
+    A --> D[Skills & resource sharing]
+    A --> E[Strengthened community feeling]
+
+    classDef main fill:#00008b,stroke:#000000,stroke-width:2px,color:#fff
+    classDef sub fill:#b0c4de,stroke:#6495ed,color:#1b4332
+
+    class A main
+    class B,C,D,E sub
+```
 
 ## History
 
