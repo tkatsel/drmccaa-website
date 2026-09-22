@@ -10,7 +10,7 @@ The idea of a website is not new, but it has never been fully actualized. In 202
 
 From these initial planning sessions and communication with other committees, the Communications Committee began drafting how the structure/pages for the website might look:
 
-
+![Website structure planning](https://github.com/tanja-volue/drmccaa-website/blob/main/Docs/src/Website_draft_2025.png)
 
 The latest development is that a test site has been created by Jessica (Co-chair) in Google Sites, and we are reviewing if this is appropriate for us.
 
