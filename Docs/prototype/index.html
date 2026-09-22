@@ -283,8 +283,8 @@ h2{
 h3{font-size:14px; font-weight:600; margin:0 0 6px}
 .lede{font-size:16.5px; color:var(--slate); margin:0 0 4px; max-width:62ch}
 p{margin: 0 0 12px; max-width: 68ch}
-ul.plain{margin:0 0 14px; padding-left:18px}
-ul.plain li{margin-bottom:5px}
+ul.plain, ol.plain{margin:0 0 14px; padding-left:18px}
+ul.plain li, ol.plain li{margin-bottom:5px; max-width:68ch}
 
 .tag{
   font: 500 10px/1 var(--mono); text-transform:uppercase; letter-spacing:.08em;
@@ -834,8 +834,13 @@ Website
   </div>
 
   <div class="note">
+    <b>Settled — September 2026</b>
+    <p>Ultimate responsibility sits with the Communications Committee. One member acts as main administrator and point of contact, and the role passes on through a proper handover.</p>
+    <p>Still open: cover for an <i>unplanned</i> departure, which a handover by definition does not provide. The register of accounts and the handover checklist are in <i>Docs/website-ownership.md</i>.</p>
+  </div>
+  <div class="note">
     <b>Open — named people, not named committees</b>
-    <p>Each committee is meant to assign specific people, or fold site maintenance into existing roles. Until those names exist, “the committee maintains it” means nobody does.</p>
+    <p>Each committee still needs to assign specific people for its own content, or fold site maintenance into existing roles. Until those names exist, “the committee maintains it” means nobody does.</p>
   </div>
 </section>
 
@@ -857,8 +862,10 @@ Website
     </table>
   </div>
   <div class="note">
-    <b>The constraint that decides this</b>
-    <p>Two requirements rule out a single shared password: the networking survey holds sensitive information, and members need to update <i>their own</i> entry. Both need the site to know who is signed in.</p>
+    <b>Settled — September 2026</b>
+    <p>The Board confirmed that three requirements are compulsory: the site must be <b>free to run</b>, <b>maintainable by volunteers</b>, and <b>safe to hold under GDPR</b>. Per-person identity, avoiding a second sign-in, committees editing their own pages, and embedding external tools are all open to reconsideration.</p>
+    <p>That rules out Wix, Wild Apricot and self-hosted WordPress on cost, and Cloudflare Access on both maintenance and its 50-user free limit. What survives is <b>Google Sites with a Google Group access list</b> — free, with no technical volunteer required, and per-person access as a side-effect rather than a cost.</p>
+    <p>A single shared password is no longer recommended. It became permissible when per-person identity was relaxed, but under a free-only constraint it buys a weaker platform and a secret that leaks over time, to avoid an administrative task a Google Group already does for nothing.</p>
   </div>
 
   <h2>Maintenance — keeping it useful</h2>
@@ -869,18 +876,26 @@ Website
   </ul>
 
   <h2>Costs — how it gets funded</h2>
-  <p>Hosting with real authentication costs money, and self-hosting the podcast adds storage on top. The donate tab was one suggestion; membership contributions are the other. This question gates the security choice, so it is worth answering first rather than last.</p>
+  <p>Answered by the requirements review: there is no budget, so the site must be free to run. That removes the funding question as a blocker, and with it the donate tab as a necessity. Self-hosting the podcast is out on the same grounds — storage costs money.</p>
 
-  <h2>Decisions this mock-up is waiting on</h2>
+  <h2>Two decisions still blocking</h2>
+  <ol class="plain">
+    <li><b>Does Professional Development accept splitting the networking data?</b> A public, name-free aggregate view on the website — counts, themes, a map without names — and the contact directory kept off the site entirely, with its own access control. This is the one decision the design depends on. It trades away the “no second sign-in” request in exchange for far less maintenance and a much smaller GDPR surface.</li>
+    <li><b>Is there a break-glass backup for the administrator account?</b> Responsibility sits with the Communications Committee, with a named main administrator and a handover when the role changes. What is missing is cover for an <i>unplanned</i> departure, which a handover by definition does not provide.</li>
+  </ol>
+
+  <h2>Smaller questions, not blocking</h2>
   <ul class="plain">
     <li>Is <b>About &amp; committees</b> public or members-only?</li>
     <li>Does the <b>newsletter archive</b> stand alone, or sit under Resources?</li>
-    <li>Does the <b>networking diagram</b> stand alone, or sit under Resources?</li>
     <li><b>Calendar</b>: embedded and subscribable, or a hand-kept yearplan?</li>
-    <li><b>Podcast</b>: hosted here, or embedded from SoundCloud?</li>
     <li><b>Job board</b>: member posts, external feed, or just a links page?</li>
-    <li>Is there a <b>Donate</b> tab at launch?</li>
   </ul>
+
+  <div class="note">
+    <b>Where this list lives</b>
+    <p>The canonical version is in <i>Docs/hosting-and-security-options.md</i> §9. This page repeats it for use in the room — if a decision is made, update the document first.</p>
+  </div>
 </section>
 
 <!-- ======================= LOCK SCREEN ======================= -->

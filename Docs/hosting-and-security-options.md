@@ -1,6 +1,7 @@
 # Hosting and security options
 
 Prepared September 2026 for the Communications Committee and the Board.
+Revised September 2026 after the Board confirmed which requirements are compulsory — see §2.
 
 This document sets out realistic options for hosting the DRMCCAA website and protecting
 its members-only content, with indicative costs, pros, cons and risks for each.
@@ -36,18 +37,41 @@ cheaper and more flexible but means two things to administer.
 These come from the April 2024 workshop and the committee responses. They rule some options
 out before cost is even considered.
 
-| # | Requirement | Where it came from | Consequence |
-|---|---|---|---|
-| R1 | The site must know **who** is signed in | Members update their own networking-survey entry | Rules out a single shared password |
-| R2 | **No second password** for the networking data | Professional Development Committee | Identity must be reusable across embedded tools, or the tools must move behind the same gate |
-| R3 | Committees edit **their own** pages | Responsibilities model | Needs a visual editor and per-committee permissions, not a code deploy |
-| R4 | Volunteer-maintainable | Maintenance is a stated top-three issue | Favours platforms over anything self-hosted |
-| R5 | Little or no recurring cost | Funding is unresolved | Favours free tiers and nonprofit programmes |
-| R6 | Must embed Google Calendar, Looker Studio, Google Forms, SoundCloud | Multiple committees | All mainstream options handle this; note the caveat in §4 |
-| R7 | Members are international, many in the EU | Alumni network | GDPR applies to the networking survey data |
+The **Status** column records the Board's position as of September 2026, after reviewing the
+first version of this document.
 
-**R1 is the decisive one.** It is worth being explicit about this, because "password-protect
-the whole site" is the cheapest and most tempting option and it cannot satisfy R1 or R2.
+| # | Requirement | Where it came from | Status |
+|---|---|---|---|
+| R1 | The site must know **who** is signed in | Members update their own networking-survey entry | Open to reconsideration |
+| R2 | **No second password** for the networking data | Professional Development Committee | Open to reconsideration |
+| R3 | Committees edit **their own** pages | Responsibilities model | Open to reconsideration — Communications can edit centrally; open to alternatives |
+| R4 | Volunteer-maintainable | Maintenance is a stated top-three issue | **Compulsory** |
+| R5 | Little or no recurring cost | Funding is unresolved | **Compulsory** |
+| R6 | Must embed Google Calendar, Looker Studio, Google Forms, SoundCloud | Multiple committees | Open to reconsideration — willing to present the information differently |
+| R7 | Members are international, many in the EU | Alumni network | **Compulsory** — GDPR applies to the networking survey data |
+
+### What the relaxation changes
+
+The hard constraints are now just three: **free, volunteer-maintainable, and GDPR-safe.**
+That has a larger effect than it first appears, and mostly by *closing* options rather than
+opening them.
+
+**R5 being compulsory is now the sharpest filter in this document.** It eliminates Wix and
+Squarespace (§3B), Wild Apricot (§3D) and self-hosted WordPress (§3E) outright, regardless of
+their other merits. It also removes the paid escape route that the first version of this
+document relied on if nonprofit validation failed.
+
+**R1 and R2 being negotiable turns out not to help much.** The relaxation exists to make a
+single shared password permissible — but the free platform that survives R5 gives per-person
+identity as a side-effect, at no cost and with less administration than a password. You end up
+satisfying R1 whether you need to or not. See §5.
+
+**R4 and R7 together are the pair that now drives the design.** Both are compulsory, and both
+point in the same direction: *do not put the member contact directory on the website.* Holding
+personal data creates ongoing obligations — lawful basis, purpose limitation, retention,
+a deletion route, a named controller — and ongoing obligations are precisely what a volunteer
+committee cannot reliably carry. R6 being negotiable is what makes acting on this possible;
+see §8.
 
 ---
 
@@ -86,7 +110,11 @@ is free but gives you no custom domain mail and no admin console.
 
 **Risks**
 - *Nonprofit validation may fail or lapse.* Alumni associations are not automatically eligible,
-  and re-validation is periodic. Check eligibility before building on it.
+  and re-validation is periodic. Check eligibility before building on it. **This is no longer a
+  blocker:** Google Sites is free on any ordinary Google account, a custom domain can be
+  connected from a personal account, and a Google Group works as the allowlist without
+  Workspace. Losing nonprofit status costs you custom `@drmccaa` mail, the admin console and
+  pooled storage — not the website. See §8.
 - *Account ownership.* If the Workspace is created under one person's identity, that person
   effectively owns the association's website and mail. Must be an association-owned account
   with at least two super-admins.
@@ -327,9 +355,14 @@ Committee's request (R2) is not met; it is consciously traded away.
 **Google Sites has no shared-password mode.** Its access control is Google accounts and Groups,
 or fully public. There is no middle setting.
 
-Choosing "one password for the whole site" therefore rules out the free option in §3A and points
-at **Wix (~$200–400/year)**, which does have a site-wide password. That is the hidden cost of
-this route: not the security posture, the platform bill.
+Choosing "one password for the whole site" therefore rules out the free option in §3A. With R5
+compulsory, it does *not* point at Wix — Wix is out on cost. It points instead at the free tier
+of a lesser builder: Framer's free plan includes password protection but caps you at 1,000
+visitors a month; SITE123 and Canva offer similar, with platform branding and a subdomain.
+
+So the route is possible for free. It is just a downgrade: you lose the Google integration and
+gain nothing, because the thing a shared password is meant to save you — running member
+accounts — is already free and lower-effort as a Google Group.
 
 ### A middle option with the same benefit
 
@@ -345,15 +378,20 @@ five years.
 
 ### Verdict
 
-Defensible, on two conditions: the networking data stays out from behind it, and the association
-accepts paying for Wix. If either condition fails, this route is worse than Option A on both
-cost and security.
+**Not recommended, now that R5 is compulsory.** R1 being relaxed makes a shared password
+*permissible*, but it was never the obstacle — cost is. Under a free-only constraint the shared
+password buys you a weaker platform, a visitor cap, no Google integration and a secret that
+decays, in exchange for avoiding an administrative task that a Google Group already does for
+nothing.
+
+The instinct behind it is sound and worth keeping: **avoid running member accounts.** A Group
+allowlist satisfies that instinct better than a password does.
 
 ## 6. Risks that apply whatever you choose
 
 | Risk | Why it matters here | Mitigation |
 |---|---|---|
-| **Key-person dependency** | Domain, hosting account and billing often sit with one volunteer. Their departure can lose the site entirely. | Association-owned accounts, a shared password manager, two admins minimum, and the domain registered to the association. Do this on day one; retrofitting it is painful. |
+| **Key-person dependency** | Domain, hosting account and billing often sit with one volunteer. Their departure can lose the site entirely. | **Partly settled:** the Communications Committee holds responsibility, with a named main administrator and a handover when the role changes. Association-owned accounts, a shared password manager and the domain registered to the association remain necessary, and a break-glass backup is still open. See [Website ownership and handover](website-ownership.md). |
 | **Content staleness** | Already identified as a top-three issue. A stale site is worse than none. | Launch small. Prefer linking and embedding over rebuilding. Name individuals, not committees, as owners. |
 | **GDPR / personal data** | The networking survey holds contact details for EU-resident alumni. | Collect the minimum, state a purpose, get explicit consent for anything shown to other members, and have a route to delete on request. Keep the survey data in one place, not copied across tools. |
 | **The allowlist only ever grows** | Nobody resigns from an alumni association, so the approved list is never pruned and slowly diverges from reality. | Decide in advance what removes someone, and review the list annually. |
@@ -372,51 +410,108 @@ cost and security.
 | **Design quality** | Low | High | High | Medium | High | Varies | High |
 | **Security burden on us** | Minimal | Minimal | Low | Minimal | **High** | None | Low, but password drift is permanent |
 | **Main risk** | Nonprofit eligibility | Funding continuity | 50-user cliff, key person | Cost scaling | Patching lapse | Defers the problem | Sensitive data ending up behind the shared password |
+| **Survives the compulsory three?** | **Yes** | No — R5 | No — R4 and R5 | No — R5 | No — R4, R5, R7 | **Yes** | No — R5 in practice |
+
+Applying R4, R5 and R7 as hard filters leaves **Option A** and **Option F**, which are not
+really rivals: F is a scoping decision that can be applied to A. That combination is the
+recommendation below.
+
+Option C deserves a note, because relaxing R3 appeared to revive it. It does not survive: R4
+still fails it, because a static site needs a technical volunteer indefinitely and freezes when
+that person leaves, and R5 fails it a second time, because Cloudflare Access is free only to
+50 users and an alumni association will pass that.
 
 ## 8. Recommendation
 
-**Confirm nonprofit eligibility, then run with Option A, scoped like Option F.**
+**Google Sites with a Google Group allowlist, scoped public-first, with the member contact
+directory kept off the website entirely.**
 
-The reasoning:
+Three parts, in order of how much they matter.
 
-1. Option A is the only one that genuinely solves the second-password problem, because the site
-   identity and the Google tooling identity are the same thing. That was the Professional
-   Development Committee's clearest and most specific request.
-2. It costs nothing, which means the unresolved funding question stops blocking the launch.
-3. A test site already exists on it, so the committee can evaluate the real thing rather than a
-   proposal.
-4. Its weakness is design quality, which is the least costly weakness to live with and the
-   easiest to revisit later.
+### 8.1 Split the networking data in two
 
-Scope it like Option F: put everything non-confidential on the public side and keep the gated
-area small. That reduces the number of pages needing maintenance, lowers the GDPR surface, and
-makes the association visible to people who might want to join it.
+This is the most valuable change available, and it is only possible because R6 was relaxed.
+The networking survey currently mixes two things with completely different risk profiles:
 
-**If nonprofit validation fails,** the choice is between Option B and Option F. Option B buys a
-better-looking site and per-person accounts for a few hundred dollars a year, at the price of
-accepting a second sign-in for the networking report.
+| | What it is | Where it goes | Why |
+|---|---|---|---|
+| **The aggregate picture** | "31 alumni working on early warning across 14 countries" — counts, themes, a map with no names | **Public page.** A static chart or image, refreshed once or twice a year by Communications | Not personal data, so no GDPR obligation, no gate, and nothing to maintain between refreshes |
+| **The contact directory** | Names, employers, email addresses, individual survey responses | **Stays off the website.** Keep it where it already lives, with its own access control, and link to it from the members' area | Personal data, so it carries obligations. Keeping it in one system means one place to honour a deletion request |
 
-**Option D becomes the right answer** only if the association decides to collect dues or run
-paid events. At that point it stops being expensive overhead and starts paying for itself.
+This serves the "one-stop shop" purpose better than a gated interactive tool that members have
+to sign in to reach — the aggregate picture is the part most people actually want to see, and
+making it public also makes the association legible to the wider field.
 
-**On the shared-password route (§5):** if the appeal is avoiding member-account administration,
-note that a Google Group allowlist achieves that *and* costs nothing *and* is less work to
-maintain. The shared password is only the simpler option if you also want Wix's design quality,
-in which case it is a reasonable package — provided the networking data stays outside it.
+It is also the single largest reduction in both maintenance burden (R4) and compliance exposure
+(R7) available anywhere in this document. R2 is not satisfied — there is still a second sign-in
+for the directory — but R2 is now negotiable, and this is the trade it was relaxed for.
+
+### 8.2 Google Sites, with or without nonprofit status
+
+Free, needs no technical volunteer, and gives per-person access control as a side-effect rather
+than as a cost. Editing is drag-and-drop, so R3 is satisfied whether committees edit their own
+pages or Communications does it centrally.
+
+**Nonprofit validation is no longer a precondition.** The first version of this document treated
+it as decisive, because failure meant falling back to paid Wix. With R5 compulsory that fallback
+is gone — but it is also unnecessary. Google Sites is free on an ordinary Google account, a
+custom domain can be connected from a personal account, and a Google Group serves as the
+allowlist without Workspace.
+
+So: **pursue nonprofit validation, but do not wait for it.** What it adds is custom `@drmccaa`
+mail, an admin console and pooled storage — all worth having, none of them the website.
+
+### 8.3 Keep the gated area small
+
+Put the calendar, podcast, book club, committee information, resources and newsletter archive on
+the public side. None of it is confidential, and every gated page is a page someone has to
+maintain *and* a reason for a member to hit a sign-in wall.
+
+The association's earlier position was that the site "cannot be public". That was a reasonable
+default, but it is worth testing against the relaxed requirements: with the contact directory
+kept off the site entirely, there may be very little left that genuinely needs a gate. Whatever
+does remain — anything members would not want indexed by search engines — sits behind the Group
+allowlist at no extra cost.
+
+### What this leaves unresolved
+
+R2 is consciously traded away: members will sign in twice to reach the contact directory. If the
+Professional Development Committee finds that unacceptable after all, the answer is to move the
+directory into Google's own tooling — a Sheet or Looker Studio report restricted to the same
+Google Group — so one identity covers both. That is more work to set up and keeps personal data
+under the association's control rather than a third party's, which is a genuine trade-off in
+both directions.
 
 ## 9. Decisions needed to proceed
 
-1. Is the association a registered nonprofit, or a country equivalent that Goodstack will
-   validate? *This single answer eliminates most of the table.*
-2. Roughly how many alumni would be given access? Under or over 50 changes Option C entirely,
-   and moves Option D between price bands.
-3. Is there any budget at all, or must the answer be free?
-4. Does the association collect dues today, or plan to?
-5. Who will own the domain and the administrator accounts, and who is the second admin?
-6. Does the Professional Development Committee accept a second sign-in for the networking
-   report if the platform is not Google, or is R2 a hard requirement?
-7. If the shared-password route (§5) is preferred, is the association content to keep the
-   networking database outside it, and to pay for Wix?
+The September 2026 requirements review answered most of the original list. Two questions remain,
+and only the first blocks anything.
+
+1. **Does the Professional Development Committee accept the split in §8.1** — an aggregate,
+   public, name-free view of the network on the website, and the contact directory kept off it?
+   This is the one decision the design depends on.
+2. **Is there a break-glass backup for the administrator account?** The ownership question is
+   otherwise settled — the Communications Committee holds responsibility, with a named main
+   administrator and a handover on change of role. What remains is cover for an *unplanned*
+   departure, which a handover by definition does not provide. See
+   [Website ownership and handover](website-ownership.md) §2.
+
+Worth doing in parallel, blocking nothing:
+
+3. Apply for nonprofit validation through Goodstack. Useful if it succeeds, survivable if it
+   does not (§8.2).
+4. Agree who maintains the aggregate network view, and how often it is refreshed.
+
+### Closed by the requirements review
+
+| Question | Answer |
+|---|---|
+| Is there any budget? | No — R5 is compulsory. Eliminates Wix, Wild Apricot and WordPress. |
+| Does the association collect dues? | Not relevant now; only mattered for Wild Apricot. |
+| How many alumni get access? | Only mattered for Cloudflare Access, which R4 and R5 rule out. |
+| Is a second sign-in acceptable? | Yes — R2 is negotiable, and §8.1 depends on it. |
+| Is nonprofit validation make-or-break? | No — Google Sites is free without it (§8.2). |
+| Should we use one shared password? | No — it costs more and achieves less than a Group allowlist (§5). |
 
 This list is the canonical one. The *Open questions* page in the mock-up repeats it for use in
 the room — if a decision is made, update it here first.
@@ -436,3 +531,6 @@ Pricing and platform facts checked September 2026.
 - [Wild Apricot pricing 2026](https://toolradar.com/tools/wild-apricot-membership/pricing)
 - [GitHub Pages site visibility and plans](https://docs.github.com/en/enterprise-cloud@latest/pages/getting-started-with-github-pages/changing-the-visibility-of-your-github-pages-site)
 - [Netlify Identity status, February 2026](https://www.netlify.com/blog/auth0-extension-identity-changes/)
+- [Using a custom domain with Google Sites](https://support.google.com/sites/answer/9068867?hl=en)
+- [Connecting a custom domain from a personal Google account](https://www.steegle.com/google-sites/how-to/assign-custom-url-domain-personal)
+- [Free website builders with password protection, 2026](https://softpicker.com/best-free-website-builders/)
