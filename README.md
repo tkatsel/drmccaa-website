@@ -1,17 +1,22 @@
-# pg-consultancy-arcgis-template
+# DRMCCAA Website
 
-### Naming your repo
-- Use the following naming convention: "pg-consultancy-arcgis-xyz-myproject"
+This repository is for the planning of a website for the DRMCCA Alumni Association.
 
-### Branching
-- Store generic scripts and template files on main branch.
-- Establish customer branches as needed based on main branch.
-- Tag releases before shipping to customer.
-- (git-flow)[http://danielkummer.github.io/git-flow-cheatsheet/] is a great way to manage branches.
+## History
 
-### Access
-- Assign a suitable team access.
+The idea of a website is not new, but it has never been fully actualized. In 2024, we started planning what needs the website might fulfill and how it can provide value to the association.
 
-### Changes
-- Do not commit changes directly to main branch. Use separate branch and create a **Pull Request** when ready to merge.
-- Assign someone to peer-review your changes to main branch.
+![First planning session for the website](https://github.com/tanja-volue/drmccaa-website/blob/main/Docs/src/Saved_Jambaord_result.png)
+
+From these initial planning sessions and communication with other committees, the Communications Committee began drafting how the structure/pages for the website might look:
+
+
+
+The latest development is that a test site has been created by Jessica (Co-chair) in Google Sites, and we are reviewing if this is appropriate for us.
+
+## Some issues
+
+Our main issues have been:
+* Security - how do we make the website accessible but proteced?
+* Maintenance - how do we make sure that the website is properly maintained and remains useful?
+* Costs - if we host a website with proper authentication, how do we fund it?
