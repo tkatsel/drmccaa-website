@@ -34,3 +34,7 @@ Our main issues have been:
 * Security - how do we make the website accessible but proteced?
 * Maintenance - how do we make sure that the website is properly maintained and remains useful?
 * Costs - if we host a website with proper authentication, how do we fund it?
+
+## Current html example
+
+If you open the html file in a browser you will see a draft site from Claude that can be used as inspiration. 

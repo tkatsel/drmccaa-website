@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DRMCCAA Member Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<style>
+/* ------------------------------------------------------------------
+   DRMCCAA website mock-up — planning visual aid, not production code.
+   Palette: navy + cool slate, with the amber of the planning sticky
+   notes reserved for unresolved decisions. Nothing else is amber.
+   ------------------------------------------------------------------ */
+
+:root{
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+
+  --ink:        #101d2e;
+  --ink-soft:   #40506620;
+  --slate:      #5c6b80;
+  --line:       #dbe1ea;
+  --line-soft:  #e8ecf2;
+  --paper:      #f5f7fa;
+  --surface:    #ffffff;
+  --surface-2:  #eef1f6;
+
+  --accent:      #173b6c;
+  --accent-soft: #2b5fa8;
+  --accent-wash: #e7eefa;
+  --fill:        #173b6c;
+  --on-fill:     #ffffff;
+
+  --bar-bg:  #0e2445;
+  --bar-fg:  #eaf0fa;
+  --bar-dim: #9bb2d4;
+
+  --flag:      #8a5a12;
+  --flag-bg:   #fdf4e0;
+  --flag-line: #e6c884;
+
+  --lock-bg: #eef1f6;
+
+  --r: 6px;
+  --r-lg: 10px;
+  --shadow: 0 1px 2px rgba(16,29,46,.06), 0 8px 24px -16px rgba(16,29,46,.35);
+
+  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ink:        #e7ecf3;
+    --ink-soft:   #8aa0bd25;
+    --slate:      #9aa8bc;
+    --line:       #273241;
+    --line-soft:  #1e2733;
+    --paper:      #0b1119;
+    --surface:    #131b26;
+    --surface-2:  #1a2431;
+
+    --accent:      #93b9ee;
+    --accent-soft: #b2cdf5;
+    --accent-wash: #16243a;
+    --fill:        #2f6ab6;
+    --on-fill:     #ffffff;
+
+    --bar-bg:  #0a1119;
+    --bar-fg:  #e7ecf3;
+    --bar-dim: #8296b3;
+
+    --flag:      #e8bd6b;
+    --flag-bg:   #2a2011;
+    --flag-line: #5b4619;
+
+    --lock-bg: #1a2431;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ink:        #e7ecf3;
+  --ink-soft:   #8aa0bd25;
+  --slate:      #9aa8bc;
+  --line:       #273241;
+  --line-soft:  #1e2733;
+  --paper:      #0b1119;
+  --surface:    #131b26;
+  --surface-2:  #1a2431;
+
+  --accent:      #93b9ee;
+  --accent-soft: #b2cdf5;
+  --accent-wash: #16243a;
+  --fill:        #2f6ab6;
+  --on-fill:     #ffffff;
+
+  --bar-bg:  #0a1119;
+  --bar-fg:  #e7ecf3;
+  --bar-dim: #8296b3;
+
+  --flag:      #e8bd6b;
+  --flag-bg:   #2a2011;
+  --flag-line: #5b4619;
+
+  --lock-bg: #1a2431;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img{max-width:100%}
+[hidden]{display:none !important}
+a{color: var(--accent)}
+:focus-visible{outline:2px solid var(--accent-soft); outline-offset:2px; border-radius:3px}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
+
+/* ---------- prototype banner ---------- */
+.proto{
+  background: var(--flag-bg);
+  color: var(--flag);
+  border-bottom: 1px solid var(--flag-line);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .02em;
+  padding: 7px 16px;
+  text-align: center;
+}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 40;
+  background: var(--bar-bg);
+  color: var(--bar-fg);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+}
+.brand{display:flex; align-items:center; gap:10px; min-width:0; margin-right:auto}
+.mark{
+  width: 30px; height: 30px; flex:none;
+  border: 1.5px solid var(--bar-dim);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--mono); font-size: 10px; letter-spacing: -.02em;
+  color: var(--bar-fg);
+}
+.brand b{font-family: var(--serif); font-weight:700; font-size:17px; letter-spacing:.01em; display:block; line-height:1.15}
+.brand span{display:block; font-size:11px; color:var(--bar-dim); line-height:1.3}
+@media (max-width: 640px){ .brand span{display:none} }
+
+.tb-btn{
+  font: 500 12.5px/1 var(--sans);
+  color: var(--bar-fg);
+  background: transparent;
+  border: 1px solid #ffffff2e;
+  border-radius: var(--r);
+  padding: 8px 11px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tb-btn:hover{background:#ffffff14}
+.tb-btn[aria-pressed="true"]{background:#ffffff1f; border-color:#ffffff59}
+.tb-btn.solid{background: var(--fill); border-color: transparent; color: var(--on-fill); font-weight:600}
+.tb-btn.icon{padding:8px 10px}
+#navToggle{display:none}
+@media (max-width: 860px){
+  #navToggle{display:inline-block}
+  .tb-btn.hide-sm{display:none}
+}
+
+.who{
+  display:flex; align-items:center; gap:8px;
+  font-size:12px; color:var(--bar-dim);
+  border-left:1px solid #ffffff24; padding-left:12px;
+}
+.who .dot{width:7px;height:7px;border-radius:50%;background:#63b37f}
+
+/* ---------- shell ---------- */
+.shell{
+  display: grid;
+  grid-template-columns: 252px minmax(0, 1fr);
+  align-items: start;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+@media (max-width: 860px){ .shell{grid-template-columns: minmax(0,1fr)} }
+
+/* ---------- sidebar ---------- */
+.sidebar{
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 52px);
+  max-height: calc(100vh - 52px);
+  overflow-y: auto;
+  padding: 20px 12px 40px;
+  border-right: 1px solid var(--line);
+}
+.navgroup{margin-bottom: 20px}
+.navgroup > h3{
+  font: 500 10.5px/1 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  color: var(--slate);
+  margin: 0 0 8px 10px;
+}
+.navlist{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1px}
+.navlist a{
+  display:flex; align-items:center; gap:8px;
+  padding: 7px 10px;
+  border-radius: var(--r);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 13.5px;
+  line-height:1.35;
+}
+.navlist a:hover{background: var(--surface-2)}
+.navlist a[aria-current="page"]{background: var(--accent-wash); color: var(--accent); font-weight:600}
+.navlist .lbl{flex:1; min-width:0}
+.key{
+  font-family: var(--mono); font-size: 10px; color: var(--slate);
+  border:1px solid var(--line); border-radius:3px; padding:1px 4px; flex:none;
+}
+.key.p2{color: var(--flag); border-color: var(--flag-line); background: var(--flag-bg)}
+.lockicon{flex:none; opacity:.55}
+
+@media (max-width: 860px){
+  .sidebar{
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(300px, 86vw);
+    max-height: none;
+    background: var(--surface);
+    z-index: 60;
+    transform: translateX(-102%);
+    transition: transform .18s ease;
+    box-shadow: var(--shadow);
+    padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
+  }
+  .sidebar[data-open="true"]{transform:none}
+}
+
+.scrim{position:fixed; inset:0; background:#0b1119a6; z-index:50}
+
+/* ---------- main ---------- */
+main{padding: 28px 24px 80px; min-width:0}
+@media (max-width: 860px){ main{padding: 22px 16px 64px} }
+
+.page{max-width: 780px}
+.eyebrow{
+  font: 500 10.5px/1 var(--mono);
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--slate);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  margin-bottom: 10px;
+}
+h1{
+  font-family: var(--serif); font-weight:700;
+  font-size: clamp(27px, 4.4vw, 36px);
+  line-height: 1.15; letter-spacing: -.01em;
+  margin: 0 0 10px; text-wrap: balance;
+}
+h2{
+  font-family: var(--serif); font-weight:600;
+  font-size: 20px; line-height:1.25;
+  margin: 34px 0 12px; text-wrap: balance;
+}
+h3{font-size:14px; font-weight:600; margin:0 0 6px}
+.lede{font-size:16.5px; color:var(--slate); margin:0 0 4px; max-width:62ch}
+p{margin: 0 0 12px; max-width: 68ch}
+ul.plain{margin:0 0 14px; padding-left:18px}
+ul.plain li{margin-bottom:5px}
+
+.tag{
+  font: 500 10px/1 var(--mono); text-transform:uppercase; letter-spacing:.08em;
+  border-radius: 3px; padding: 4px 6px; border:1px solid;
+}
+.tag.p2{color:var(--flag); background:var(--flag-bg); border-color:var(--flag-line)}
+.tag.member{color:var(--accent); background:var(--accent-wash); border-color:transparent}
+.tag.public{color:var(--slate); background:var(--surface-2); border-color:transparent}
+
+/* cards */
+.grid{display:grid; gap:12px; margin: 0 0 8px}
+.grid.two{grid-template-columns: repeat(auto-fit, minmax(230px, 1fr))}
+.grid.four{grid-template-columns: repeat(auto-fit, minmax(170px, 1fr))}
+.card{
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 15px 16px;
+}
+.card p{margin:0; font-size:13.5px; color:var(--slate)}
+.card .num{font-family:var(--mono); font-size:11px; color:var(--slate)}
+
+/* list rows — events, episodes, archive */
+.rows{border-top:1px solid var(--line); margin: 0 0 14px}
+.row{
+  display:grid; grid-template-columns: 92px minmax(0,1fr) auto;
+  gap: 4px 14px; align-items: baseline;
+  border-bottom:1px solid var(--line);
+  padding: 11px 2px;
+}
+.row .when{font-family:var(--mono); font-size:12px; color:var(--slate); font-variant-numeric: tabular-nums}
+.row .what{min-width:0}
+.row .what b{font-weight:600; display:block}
+.row .what small{color:var(--slate); font-size:12.5px}
+.row .meta{font-size:12px; color:var(--slate); white-space:nowrap}
+@media (max-width: 560px){
+  .row{grid-template-columns: minmax(0,1fr); gap:3px}
+  .row .meta{white-space:normal}
+}
+
+/* embed placeholder — stands in for Google Calendar / Looker / SoundCloud */
+.embed{
+  border: 1px dashed var(--line);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 9px, var(--ink-soft) 9px 10px);
+  border-radius: var(--r-lg);
+  padding: 26px 18px;
+  text-align: center;
+  color: var(--slate);
+  margin: 0 0 14px;
+}
+.embed .what{font-family:var(--mono); font-size:12px; letter-spacing:.02em; color:var(--ink)}
+.embed .why{font-size:12.5px; margin-top:4px}
+
+/* planning note — the amber sticky notes from the workshop boards */
+.note{
+  background: var(--flag-bg);
+  border: 1px solid var(--flag-line);
+  border-left-width: 3px;
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 11px 14px;
+  margin: 0 0 12px;
+  font-size: 13.5px;
+  color: var(--flag);
+  max-width: 68ch;
+}
+.note b{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:3px}
+.note p{margin:0; color:inherit; max-width:none}
+.note p + p{margin-top:6px}
+body.notes-off .note{display:none}
+body.notes-off .notes-hint{display:none}
+
+/* fake form controls */
+.form{display:grid; gap:10px; max-width:440px; margin:0 0 14px}
+.form label{font-size:12.5px; font-weight:600}
+.form input, .form select, .form textarea{
+  width:100%; font:400 14px var(--sans); color:var(--ink);
+  background: var(--surface); border:1px solid var(--line);
+  border-radius: var(--r); padding:9px 11px;
+}
+.btn{
+  font:600 13.5px var(--sans); cursor:pointer;
+  background: var(--fill); color: var(--on-fill);
+  border: 1px solid transparent; border-radius: var(--r);
+  padding: 9px 15px; justify-self:start;
+}
+.btn.ghost{background:transparent; color:var(--accent); border-color:var(--line)}
+
+/* table */
+.tablewrap{overflow-x:auto; margin:0 0 14px; border:1px solid var(--line); border-radius:var(--r-lg)}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:13.5px}
+th,td{text-align:left; padding:10px 14px; border-bottom:1px solid var(--line-soft); vertical-align:top}
+th{font: 500 10.5px/1.4 var(--mono); text-transform:uppercase; letter-spacing:.07em; color:var(--slate); background:var(--surface-2)}
+tr:last-child td{border-bottom:none}
+
+/* sitemap tree */
+.tree{font-family:var(--mono); font-size:12.5px; line-height:1.9; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); padding:16px 18px; overflow-x:auto; margin:0 0 14px}
+.tree .m{color:var(--accent)}
+.tree .f{color:var(--flag)}
+
+/* lock screen */
+.lock{
+  max-width: 480px; margin: 6vh auto 0;
+  background: var(--surface); border:1px solid var(--line);
+  border-radius: var(--r-lg); padding: 28px 26px; text-align:center;
+  box-shadow: var(--shadow);
+}
+.lock .ring{
+  width:46px; height:46px; margin:0 auto 14px; border-radius:50%;
+  background: var(--lock-bg); display:grid; place-items:center;
+}
+.lock h2{margin:0 0 6px; font-size:21px}
+.lock p{color:var(--slate); font-size:14px; margin:0 auto 18px; max-width:38ch}
+.authopts{display:grid; gap:9px; text-align:left}
+.authopt{
+  display:flex; align-items:center; gap:11px; width:100%;
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  padding:11px 13px; cursor:pointer; font:500 13.5px var(--sans); color:var(--ink); text-align:left;
+}
+.authopt:hover{border-color:var(--accent-soft); background:var(--accent-wash)}
+.authopt small{display:block; font-weight:400; color:var(--slate); font-size:12px}
+
+/* modal */
+.scrim.modal{display:grid; place-items:center; padding:16px; z-index:80}
+.sheet{background:var(--surface); border-radius:var(--r-lg); border:1px solid var(--line); padding:26px 24px; width:min(430px,100%); box-shadow:var(--shadow)}
+.sheet h2{margin:0 0 6px; font-size:20px}
+.sheet p{color:var(--slate); font-size:13.5px}
+
+footer.foot{
+  border-top:1px solid var(--line); margin-top:38px; padding-top:16px;
+  font-size:12px; color:var(--slate); display:flex; gap:14px; flex-wrap:wrap;
+}
+.notes-hint{font-size:12px; color:var(--slate); margin-bottom:18px; font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<div class="proto">Visual mock-up for planning only — no real member data, no real authentication. Every name, date and figure below is invented.</div>
+
+<header class="topbar">
+  <button class="tb-btn icon" id="navToggle" aria-expanded="false" aria-controls="sidebar" title="Pages">☰</button>
+  <div class="brand">
+    <div class="mark" aria-hidden="true">DR</div>
+    <div>
+      <b>DRMCCAA</b>
+      <span>Disaster Risk Management &amp; Climate Change Adaptation Alumni Association</span>
+    </div>
+  </div>
+  <div class="who" id="who" hidden><span class="dot"></span><span id="whoName"></span></div>
+  <button class="tb-btn hide-sm" id="notesBtn" aria-pressed="true">Planning notes</button>
+  <button class="tb-btn icon" id="themeBtn" title="Switch light / dark">◐</button>
+  <button class="tb-btn solid" id="authBtn">Sign in</button>
+</header>
+
+<div class="shell">
+  <nav class="sidebar" id="sidebar" data-open="false" aria-label="Site pages"></nav>
+
+  <main id="main">
+
+<!-- ======================= PUBLIC ======================= -->
+
+<section class="page" id="p-home" data-title="Home" data-group="Public pages" data-access="public">
+  <div class="eyebrow"><span class="tag public">Public</span> Landing page</div>
+  <h1>A one-stop shop for everything DRMCCAA</h1>
+  <p class="lede">The alumni association for graduates of the Disaster Risk Management and Climate Change Adaptation programme — connecting practitioners and researchers across the field, wherever they landed.</p>
+
+  <p class="notes-hint">Amber notes are open questions carried over from the 2024 workshop and the structure diagram. Turn them off with “Planning notes” to see the site as a member would.</p>
+
+  <div class="note">
+    <b>Decision — existing domain</b>
+    <p>A domain and a basic site already exist. The workshop concluded the domain may be worth keeping but the site itself should be re-done — a clean slate at launch, with very little on it.</p>
+  </div>
+
+  <h2>What the website is for</h2>
+  <div class="grid four">
+    <div class="card"><span class="num">01</span><h3>One-stop shop</h3><p>Every association service reachable from one place, instead of scattered across mail, LinkedIn and Facebook.</p></div>
+    <div class="card"><span class="num">02</span><h3>Transparency</h3><p>Who sits on the Board, what each committee is doing, how to get involved.</p></div>
+    <div class="card"><span class="num">03</span><h3>Skills &amp; resource sharing</h3><p>Learning material, the networking database, recommendations from the community.</p></div>
+    <div class="card"><span class="num">04</span><h3>Community feeling</h3><p>The podcast, the book club, the reunion, and a calendar that keeps them all in one view.</p></div>
+  </div>
+
+  <h2>Members’ area</h2>
+  <p>Most of the site sits behind sign-in. Alumni get the calendar, the networking database, mentorship, resources and the newsletter archive.</p>
+  <button class="btn" data-signin>Sign in to the members’ area</button>
+
+  <h2>Latest newsletter</h2>
+  <div class="rows">
+    <div class="row"><span class="when">Sep 2026</span><span class="what"><b>Issue 14 — Reunion wrap-up and the year ahead</b><small>Public teaser; full issue in the members’ archive.</small></span><span class="meta">Read →</span></div>
+  </div>
+  <div class="note">
+    <b>Open — newsletter on the home page</b>
+    <p>The structure diagram suggests the home page links to the latest issue, while the full archive lives under Resources. Worth confirming whether the latest issue should be readable publicly or only after sign-in.</p>
+  </div>
+
+  <footer class="foot"><span>© DRMCCAA</span><span>Contact</span><span>LinkedIn</span><span>Facebook</span></footer>
+</section>
+
+<section class="page" id="p-news" data-title="News" data-group="Public pages" data-access="public" data-phase="2">
+  <div class="eyebrow"><span class="tag public">Public</span><span class="tag p2">Phase 2</span></div>
+  <h1>News</h1>
+  <p class="lede">A public-facing news stream, sitting alongside the home page rather than behind sign-in.</p>
+
+  <div class="note">
+    <b>Phase 2 — not for launch</b>
+    <p>Flagged in the structure diagram as a later wish-list item: “I wouldn’t be promoting this as the first thing we do.”</p>
+    <p>One low-effort version is to feed in articles from relevant sector news sites rather than writing our own — which also avoids competing with the newsletter and the blog for the same scarce writing time.</p>
+  </div>
+
+  <div class="rows">
+    <div class="row"><span class="when">12 Sep 2026</span><span class="what"><b>Alumni contribute to the national adaptation plan consultation</b><small>Association news — written in-house</small></span><span class="meta">Association</span></div>
+    <div class="row"><span class="when">04 Sep 2026</span><span class="what"><b>Sendai Framework midterm review: what changed for practitioners</b><small>Syndicated from an external sector publication</small></span><span class="meta">Sector</span></div>
+    <div class="row"><span class="when">27 Aug 2026</span><span class="what"><b>Call for abstracts: regional DRR conference</b><small>Syndicated</small></span><span class="meta">Sector</span></div>
+  </div>
+</section>
+
+<!-- ======================= ASSOCIATION ======================= -->
+
+<section class="page" id="p-about" data-title="About &amp; committees" data-group="The association" data-access="member">
+  <div class="eyebrow"><span class="tag member">Members</span> About us</div>
+  <h1>The Board and the committees</h1>
+  <p class="lede">Who runs the association, what each committee is working towards, and how to reach them.</p>
+
+  <h2>Board</h2>
+  <div class="grid two">
+    <div class="card"><h3>Chair</h3><p>Example Name · chair@drmccaa.example</p></div>
+    <div class="card"><h3>Co-chair</h3><p>Example Name · cochair@drmccaa.example</p></div>
+    <div class="card"><h3>Treasurer</h3><p>Example Name · treasurer@drmccaa.example</p></div>
+    <div class="card"><h3>Secretary</h3><p>Example Name · secretary@drmccaa.example</p></div>
+  </div>
+
+  <h2>Committees</h2>
+  <div class="grid two">
+    <div class="card"><h3>Professional Development</h3><p>Networking database, mentorship programme, career development database. <br>profdev@drmccaa.example</p></div>
+    <div class="card"><h3>Social &amp; Reunion</h3><p>Podcast, book club, Fika and other regular events, the reunion. <br>social@drmccaa.example</p></div>
+    <div class="card"><h3>Communications</h3><p>Newsletter, blog, social channels, and overall coordination of this site. <br>comms@drmccaa.example</p></div>
+    <div class="card"><h3>Finance</h3><p>Membership contributions, budget, and any hosting costs the site incurs. <br>finance@drmccaa.example</p></div>
+  </div>
+
+  <h2>Getting involved</h2>
+  <ul class="plain">
+    <li>Charter (PDF)</li>
+    <li>Election process and current vacancies</li>
+    <li>General enquiries: info@drmccaa.example</li>
+    <li>LinkedIn · Facebook</li>
+  </ul>
+
+  <div class="note">
+    <b>Open — is “About us” public or members-only?</b>
+    <p>The structure diagram places About us behind the password, but transparency about the Board is one of the four stated purposes, and it is the page a prospective member is most likely to want. Candidate for moving to the public side.</p>
+  </div>
+</section>
+
+<section class="page" id="p-calendar" data-title="Calendar of events" data-group="The association" data-access="member">
+  <div class="eyebrow"><span class="tag member">Members</span> Social &amp; Reunion + Professional Development</div>
+  <h1>Calendar of events</h1>
+  <p class="lede">Everything in one view: Social &amp; Reunion events, Professional Development sessions, book club meets and the reunion.</p>
+
+  <div class="embed">
+    <div class="what">[ embedded Google Calendar ]</div>
+    <div class="why">Members can also copy the calendar link and subscribe from their own calendar app.</div>
+  </div>
+
+  <h2>Coming up</h2>
+  <div class="rows">
+    <div class="row"><span class="when">02 Oct</span><span class="what"><b>Fika — open drop-in</b><small>Online · recurring, first Thursday</small></span><span class="meta">Social &amp; Reunion</span></div>
+    <div class="row"><span class="when">15 Oct</span><span class="what"><b>Book club: <i>The Unnatural Disaster</i></b><small>Voting and discussion on the book club platform</small></span><span class="meta">Social &amp; Reunion</span></div>
+    <div class="row"><span class="when">29 Oct</span><span class="what"><b>Mentorship kick-off for the 2026/27 pairs</b><small>Online</small></span><span class="meta">Prof. Development</span></div>
+    <div class="row"><span class="when">21 Nov</span><span class="what"><b>Career panel: moving from research into humanitarian practice</b><small>Online</small></span><span class="meta">Prof. Development</span></div>
+  </div>
+
+  <h2>Suggest an event</h2>
+  <p>Want to arrange an activity, or have an idea for one? Send it to the Social &amp; Reunion Committee.</p>
+  <form class="form" onsubmit="return false">
+    <div><label for="evName">What would you like to run?</label><input id="evName" placeholder="e.g. a regional meet-up in Nairobi"></div>
+    <div><label for="evWhen">Rough timing</label><input id="evWhen" placeholder="e.g. some time in March"></div>
+    <button class="btn" type="submit">Send suggestion</button>
+  </form>
+
+  <div class="note">
+    <b>Open — embedded calendar or a yearplan?</b>
+    <p>An embedded Google calendar is the low-effort option. The alternative raised in planning was a plain list of recurring events and dates — a yearplan — which is easier to keep correct but cannot be subscribed to.</p>
+    <p>Either way, the workshop was clear that the value is having announcements in one place instead of spread over LinkedIn, Facebook and mail.</p>
+  </div>
+</section>
+
+<section class="page" id="p-newsletter" data-title="Newsletter &amp; archive" data-group="The association" data-access="member">
+  <div class="eyebrow"><span class="tag member">Members</span> Communications Committee</div>
+  <h1>Newsletter &amp; archive</h1>
+  <p class="lede">The current issue, plus every issue since the association started sending one.</p>
+
+  <div class="rows">
+    <div class="row"><span class="when">Sep 2026</span><span class="what"><b>Issue 14 — Reunion wrap-up and the year ahead</b></span><span class="meta">Current</span></div>
+    <div class="row"><span class="when">Jun 2026</span><span class="what"><b>Issue 13 — Mentorship pairs, and a new podcast season</b></span><span class="meta">Archive</span></div>
+    <div class="row"><span class="when">Mar 2026</span><span class="what"><b>Issue 12 — Networking survey results</b></span><span class="meta">Archive</span></div>
+    <div class="row"><span class="when">Dec 2025</span><span class="what"><b>Issue 11 — Year in review</b></span><span class="meta">Archive</span></div>
+  </div>
+
+  <div class="note">
+    <b>Open — where does the archive live?</b>
+    <p>The structure diagram suggests the archive could sit under Resources rather than as its own top-level page, with the home page linking straight to the latest issue. Two places for the same content is exactly the kind of thing that decays.</p>
+  </div>
+  <div class="note">
+    <b>Idea from the workshop</b>
+    <p>Post newsletter content here and send a much shorter email that links to it — less to write in the mail itself, and the content stays findable afterwards.</p>
+  </div>
+</section>
+
+<!-- ======================= PROFESSIONAL DEVELOPMENT ======================= -->
+
+<section class="page" id="p-networking" data-title="Networking database" data-group="Professional development" data-access="member">
+  <div class="eyebrow"><span class="tag member">Members</span> Professional Development Committee</div>
+  <h1>Networking database</h1>
+  <p class="lede">Who in the network works on what, and where. Built from the networking survey.</p>
+
+  <div class="embed">
+    <div class="what">[ embedded networking visualisation ]</div>
+    <div class="why">Currently on Kumu; the committee is considering moving it to Looker Studio.</div>
+  </div>
+
+  <h2>Your entry</h2>
+  <p>Your survey answers are what appear in the visualisation above. Update them whenever your role or location changes.</p>
+  <button class="btn ghost">Update my information</button>
+
+  <div class="note">
+    <b>Requirement — single sign-in</b>
+    <p>The survey data contains sensitive information, so a separate password was sent out once to protect it. The Professional Development Committee’s stated wish is that signing in to the website is enough — no second password, and the same sign-in also lets a member edit their own entry.</p>
+    <p>This is the strongest argument for real per-person accounts rather than one shared site password.</p>
+  </div>
+  <div class="note">
+    <b>Nice to have — member profiles</b>
+    <p>The survey already holds something close to profile information, including contact details for some people. With each person’s explicit approval, that could become a searchable member profile. Not for launch.</p>
+  </div>
+</section>
+
+<section class="page" id="p-mentorship" data-title="Mentorship programme" data-group="Professional development" data-access="member">
+  <div class="eyebrow"><span class="tag member">Members</span> Professional Development Committee</div>
+  <h1>Mentorship programme</h1>
+  <p class="lede">Pairing recent graduates with alumni further along, for a cycle of roughly six months.</p>
+
+  <h2>How a cycle runs</h2>
+  <div class="grid two">
+    <div class="card"><span class="num">Step 1</span><h3>Sign up</h3><p>Mentors and mentees register during the intake window, usually September.</p></div>
+    <div class="card"><span class="num">Step 2</span><h3>Matching</h3><p>The committee pairs on field, region and what the mentee is trying to move towards.</p></div>
+    <div class="card"><span class="num">Step 3</span><h3>Kick-off</h3><p>One joint session, then pairs set their own rhythm.</p></div>
+    <div class="card"><span class="num">Step 4</span><h3>Close-out</h3><p>Short feedback round that feeds the next cycle.</p></div>
+  </div>
+
+  <p>Intake for the 2026/27 cycle closes 10 October.</p>
+  <button class="btn">Register as mentor or mentee</button>
+
+  <div class="note">
+    <b>Open — link out or build in?</b>
+    <p>Registration is currently a Google Form. The committee’s general preference is to integrate other platforms where possible and link to them where not. Worth deciding per service rather than once for all of them.</p>
+  </div>
+</section>
+
+<section class="page" id="p-career" data-title="Career development database" data-group="Professional development" data-access="member">
+  <div class="eyebrow"><span class="tag member">Members</span> Professional Development Committee</div>
+  <h1>Career development database</h1>
+  <p class="lede">Where alumni ended up, what routes they took, and what the role actually involves day to day.</p>
+
+  <div class="embed">
+    <div class="what">[ embedded career database ]</div>
+    <div class="why">Planned as a Looker Studio report fed by a Google Form, mirroring the networking survey setup.</div>
+  </div>
+
+  <h2>Contribute your route</h2>
+  <p>The database is only as useful as the number of routes in it. Fifteen minutes, once.</p>
+  <button class="btn">Fill in the career survey</button>
+
+  <div class="note">
+    <b>Future project</b>
+    <p>Listed by the committee as a future project rather than existing content — the page shape can be agreed now, but there is nothing to display yet.</p>
+    <p>It was also unclear at the workshop what exactly this database should hold. Worth defining before building the form.</p>
+  </div>
+</section>
+
+<section class="page" id="p-jobs" data-title="Job board" data-group="Professional development" data-access="member" data-phase="2">
+  <div class="eyebrow"><span class="tag member">Members</span><span class="tag p2">Phase 2</span></div>
+  <h1>Job board</h1>
+  <p class="lede">Vacancies posted by members, for members.</p>
+
+  <div class="rows">
+    <div class="row"><span class="when">18 Sep</span><span class="what"><b>Adaptation Advisor — national meteorological agency</b><small>Posted by a member · closes 30 Sep</small></span><span class="meta">Full time</span></div>
+    <div class="row"><span class="when">11 Sep</span><span class="what"><b>DRR Programme Officer — regional NGO</b><small>Posted by a member · closes 05 Oct</small></span><span class="meta">Full time</span></div>
+    <div class="row"><span class="when">02 Sep</span><span class="what"><b>PhD position — urban flood risk</b><small>Posted by a member · rolling</small></span><span class="meta">Research</span></div>
+  </div>
+
+  <div class="note">
+    <b>Phase 2 — explicitly not crucial for launch</b>
+    <p>A nice-to-have down the track. It needs more maintenance and more consideration than anything else on the list, because stale vacancies make the whole site look abandoned.</p>
+  </div>
+  <div class="note">
+    <b>Three options were raised</b>
+    <p><b>1.</b> Members post their own, like the vacancy posts people already put on LinkedIn — no editorial work, but someone still has to remove expired ones.</p>
+    <p><b>2.</b> Embed or fetch postings from relevant external job sites — least maintenance, least tailored.</p>
+    <p><b>3.</b> Drop the board and instead keep a page of links to good job boards plus CV help — arguably better placed under Resources.</p>
+  </div>
+</section>
+
+<!-- ======================= COMMUNITY ======================= -->
+
+<section class="page" id="p-podcast" data-title="Podcast" data-group="Community" data-access="member">
+  <div class="eyebrow"><span class="tag member">Members</span> Social &amp; Reunion Committee</div>
+  <h1>Podcast</h1>
+  <p class="lede">Conversations with alumni about the work they do and how they got there.</p>
+
+  <div class="embed">
+    <div class="what">[ embedded SoundCloud player ]</div>
+    <div class="why">Episodes stay hosted on SoundCloud and play in place, rather than being uploaded here.</div>
+  </div>
+
+  <div class="rows">
+    <div class="row"><span class="when">Ep. 12</span><span class="what"><b>Early warning systems that people actually act on</b><small>42 min</small></span><span class="meta">Sep 2026</span></div>
+    <div class="row"><span class="when">Ep. 11</span><span class="what"><b>From thesis to ministry: three alumni compare notes</b><small>38 min</small></span><span class="meta">Aug 2026</span></div>
+    <div class="row"><span class="when">Ep. 10</span><span class="what"><b>Funding adaptation at city scale</b><small>51 min</small></span><span class="meta">Jun 2026</span></div>
+  </div>
+
+  <div class="note">
+    <b>Open — host here, or embed?</b>
+    <p>The Social &amp; Reunion Committee would prefer the podcast to live on the website. The counter-point from the structure review is that self-hosting is high effort and needs real storage; embedding the SoundCloud player gets most of the benefit at almost no cost.</p>
+    <p>Storage is also a cost question, which ties back to how the site is funded.</p>
+  </div>
+</section>
+
+<section class="page" id="p-bookclub" data-title="Book club" data-group="Community" data-access="member">
+  <div class="eyebrow"><span class="tag member">Members</span> Social &amp; Reunion Committee</div>
+  <h1>Book club</h1>
+  <p class="lede">Meets roughly every six weeks. Book choice is voted on by whoever is reading along.</p>
+
+  <div class="grid two">
+    <div class="card"><h3>Currently reading</h3><p><i>The Unnatural Disaster</i> — discussion 15 October</p></div>
+    <div class="card"><h3>Voting now</h3><p>Three titles shortlisted for the December meet</p></div>
+  </div>
+  <button class="btn ghost">Open the book club platform</button>
+
+  <div class="note">
+    <b>Decision — link out, don’t rebuild</b>
+    <p>The existing book club platform already has a book database and voting tools. The preference from planning is to keep using it and simply post each meet in the calendar with a link, rather than recreating any of it here.</p>
+  </div>
+</section>
+
+<section class="page" id="p-resources" data-title="Resources" data-group="Community" data-access="member">
+  <div class="eyebrow"><span class="tag member">Members</span> Shared across committees</div>
+  <h1>Resources</h1>
+  <p class="lede">A map of what the association and its members can point you to — learning material, networking, and recommendations from the community.</p>
+
+  <h2>Learning</h2>
+  <div class="rows">
+    <div class="row"><span class="when">Course</span><span class="what"><b>Open courseware on risk assessment methods</b><small>Free · self-paced</small></span><span class="meta">External</span></div>
+    <div class="row"><span class="when">Toolkit</span><span class="what"><b>Community-based adaptation facilitation guide</b><small>PDF</small></span><span class="meta">External</span></div>
+  </div>
+
+  <h2>Networking &amp; career</h2>
+  <ul class="plain">
+    <li>Networking database — see the dedicated page</li>
+    <li>Job boards worth watching, and help with CVs</li>
+    <li>Newsletter archive</li>
+  </ul>
+
+  <h2>Recommendations from members</h2>
+  <p>Podcasts, books, people worth following. Submissions are anonymous.</p>
+  <form class="form" onsubmit="return false">
+    <div>
+      <label for="recType">Type</label>
+      <select id="recType"><option>Podcast</option><option>Book</option><option>Person to follow</option><option>Tool or dataset</option><option>Something else</option></select>
+    </div>
+    <div><label for="recWhat">What is it, and why is it worth our time?</label><textarea id="recWhat" rows="3"></textarea></div>
+    <button class="btn" type="submit">Submit anonymously</button>
+  </form>
+
+  <div class="note">
+    <b>Open — how much collects here?</b>
+    <p>Resources is the natural home for several things currently drawn as their own pages: the newsletter archive, the networking diagram, and the “links to job boards plus CV help” version of the job board. Deciding this changes the top-level navigation, so it is worth settling early.</p>
+  </div>
+</section>
+
+<section class="page" id="p-blog" data-title="Blog" data-group="Community" data-access="member" data-phase="2">
+  <div class="eyebrow"><span class="tag member">Members</span><span class="tag p2">Phase 2</span></div>
+  <h1>Blog</h1>
+  <p class="lede">Members writing about their work in a popular-science style, and using each other to think problems through.</p>
+
+  <div class="rows">
+    <div class="row"><span class="when">Sep 2026</span><span class="what"><b>What we got wrong about our flood early warning pilot</b><small>By a member</small></span><span class="meta">Field notes</span></div>
+    <div class="row"><span class="when">Aug 2026</span><span class="what"><b>Explaining return periods without losing the room</b><small>By a member</small></span><span class="meta">Practice</span></div>
+  </div>
+
+  <div class="note">
+    <b>Open — who writes it, and will it last?</b>
+    <p>The question raised in the structure review was momentum: who writes, how often, and does a blog simply cannibalise the newsletter? One option is a small number of named columnists rather than open submissions.</p>
+  </div>
+  <div class="note">
+    <b>The version with the clearest demand</b>
+    <p>Letting members post their own research or work in a popular-science style, and problem-solve issues together — that came up in the workshop from the community side, not just the committee side.</p>
+  </div>
+</section>
+
+<!-- ======================= PLANNING PAGES ======================= -->
+
+<section class="page" id="p-structure" data-title="Site map &amp; ownership" data-group="For the planning group" data-access="public">
+  <div class="eyebrow"><span class="tag public">Planning aid</span> Not a real page of the site</div>
+  <h1>Site map &amp; ownership</h1>
+  <p class="lede">The structure this mock-up implements, and who would be responsible for keeping each part current.</p>
+
+  <h2>Structure</h2>
+  <div class="tree">
+Website
+├─ Home — overview of the association          <span class="f">public</span>
+├─ News                                        <span class="f">public · phase 2</span>
+└─ Sign in ───────────────────────────────────────────────────
+   │
+   ├─ The association
+   │  ├─ About &amp; committees                   <span class="m">members</span>
+   │  ├─ Calendar of events                    <span class="m">members</span>
+   │  └─ Newsletter &amp; archive                  <span class="m">members</span>
+   ├─ Professional development
+   │  ├─ Networking database                   <span class="m">members</span>
+   │  ├─ Mentorship programme                  <span class="m">members</span>
+   │  ├─ Career development database           <span class="m">members</span>
+   │  └─ Job board                             <span class="f">phase 2</span>
+   └─ Community
+      ├─ Podcast                               <span class="m">members</span>
+      ├─ Book club                             <span class="m">members</span>
+      ├─ Resources                             <span class="m">members</span>
+      └─ Blog                                  <span class="f">phase 2</span>
+  </div>
+
+  <div class="note">
+    <b>Not placed yet — Donate</b>
+    <p>A donate tab was sketched against the members’ area as a possible way to fund the site. It is drawn with a question mark in the structure diagram and is deliberately absent from this mock-up.</p>
+  </div>
+
+  <h2>Who maintains what</h2>
+  <p>The Communications Committee takes the project-manager role: making sure each committee has the access it needs, and that the site as a whole stays coherent. Each committee is responsible for its own content, either directly or by sending updates to Communications.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Committee</th><th>Owns these pages</th><th>Update rhythm</th></tr></thead>
+      <tbody>
+        <tr><td>Communications</td><td>Home, News, Newsletter &amp; archive, Blog, plus overall coordination and access</td><td>Monthly</td></tr>
+        <tr><td>Professional Development</td><td>Networking database, Mentorship, Career development database, Job board</td><td>Per programme cycle</td></tr>
+        <tr><td>Social &amp; Reunion</td><td>Podcast, Book club, event entries in the calendar</td><td>Per event</td></tr>
+        <tr><td>Board</td><td>About &amp; committees, Charter, election information</td><td>Annually, and after elections</td></tr>
+        <tr><td>Shared</td><td>Resources</td><td>Ad hoc, as members submit</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>Open — named people, not named committees</b>
+    <p>Each committee is meant to assign specific people, or fold site maintenance into existing roles. Until those names exist, “the committee maintains it” means nobody does.</p>
+  </div>
+</section>
+
+<section class="page" id="p-questions" data-title="Open questions" data-group="For the planning group" data-access="public">
+  <div class="eyebrow"><span class="tag public">Planning aid</span> Not a real page of the site</div>
+  <h1>Open questions</h1>
+  <p class="lede">The three issues that have held the website up, with the options currently on the table.</p>
+
+  <h2>Security — accessible but protected</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Option</th><th>What it gives</th><th>Where it falls short</th></tr></thead>
+      <tbody>
+        <tr><td>One shared site password (Wix-style)</td><td>Simple, cheap, instantly understood</td><td>Low security. Cannot identify who is signed in, so it can never satisfy the Professional Development requirement of editing your own networking entry. Leaks permanently once shared.</td></tr>
+        <tr><td>Approved account list (Google Sites)</td><td>Per-person identity, revocable, no passwords for us to hold. Matches the test site already built.</td><td>Ties members to a Google account. Someone must keep the approved list current as people join and leave.</td></tr>
+        <tr><td>Per-committee passwords</td><td>Limits blast radius on the sensitive survey data</td><td>More passwords to circulate and rotate. The committees explicitly asked for <i>fewer</i> passwords, not more.</td></tr>
+        <tr><td>Hosted site with real accounts</td><td>Everything the committees asked for, including member profiles</td><td>Highest cost and the most to maintain. Needs a funding answer first.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">
+    <b>The constraint that decides this</b>
+    <p>Two requirements rule out a single shared password: the networking survey holds sensitive information, and members need to update <i>their own</i> entry. Both need the site to know who is signed in.</p>
+  </div>
+
+  <h2>Maintenance — keeping it useful</h2>
+  <p>The risk is not building the site, it is the site being six months stale by spring. Two things reduce that risk directly:</p>
+  <ul class="plain">
+    <li>Launch with a clean slate and very little on it, then add. Every page in this mock-up is a page someone has to keep current.</li>
+    <li>Prefer linking and embedding over rebuilding — the book club platform, the podcast host, the calendar. Content maintained elsewhere cannot go stale here.</li>
+  </ul>
+
+  <h2>Costs — how it gets funded</h2>
+  <p>Hosting with real authentication costs money, and self-hosting the podcast adds storage on top. The donate tab was one suggestion; membership contributions are the other. This question gates the security choice, so it is worth answering first rather than last.</p>
+
+  <h2>Decisions this mock-up is waiting on</h2>
+  <ul class="plain">
+    <li>Is <b>About &amp; committees</b> public or members-only?</li>
+    <li>Does the <b>newsletter archive</b> stand alone, or sit under Resources?</li>
+    <li>Does the <b>networking diagram</b> stand alone, or sit under Resources?</li>
+    <li><b>Calendar</b>: embedded and subscribable, or a hand-kept yearplan?</li>
+    <li><b>Podcast</b>: hosted here, or embedded from SoundCloud?</li>
+    <li><b>Job board</b>: member posts, external feed, or just a links page?</li>
+    <li>Is there a <b>Donate</b> tab at launch?</li>
+  </ul>
+</section>
+
+<!-- ======================= LOCK SCREEN ======================= -->
+
+<div class="lock" id="lock" hidden>
+  <div class="ring" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="10.5" width="16" height="10" rx="2"></rect><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"></path></svg>
+  </div>
+  <h2>Members only</h2>
+  <p><b id="lockPage">This page</b> is behind sign-in. Choose a method below to see it — nothing is really being authenticated.</p>
+  <div class="authopts">
+    <button class="authopt" data-auth="Signed in — Google account">
+      <span aria-hidden="true">◎</span>
+      <span>Continue with a Google account<small>Approved-address list · matches the Google Sites test site</small></span>
+    </button>
+    <button class="authopt" data-auth="Signed in — member account">
+      <span aria-hidden="true">✉</span>
+      <span>Continue with a member account<small>Email and password held by the association</small></span>
+    </button>
+    <button class="authopt" data-auth="Signed in — shared password">
+      <span aria-hidden="true">⌘</span>
+      <span>Enter the site password<small>One password for everyone · cannot identify who you are</small></span>
+    </button>
+  </div>
+</div>
+
+  </main>
+</div>
+
+<div class="scrim modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <h2 id="modalTitle">Choose a sign-in method</h2>
+    <p>This mock-up treats all three as equivalent. They are shown side by side because the choice between them is still open — see <b>Open questions</b>.</p>
+    <div class="authopts">
+      <button class="authopt" data-auth="Signed in — Google account"><span aria-hidden="true">◎</span><span>Continue with a Google account<small>Approved-address list</small></span></button>
+      <button class="authopt" data-auth="Signed in — member account"><span aria-hidden="true">✉</span><span>Continue with a member account<small>Email and password</small></span></button>
+      <button class="authopt" data-auth="Signed in — shared password"><span aria-hidden="true">⌘</span><span>Enter the site password<small>One password for everyone</small></span></button>
+    </div>
+    <p style="margin:16px 0 0"><button class="btn ghost" id="modalCancel">Cancel</button></p>
+  </div>
+</div>
+
+<div class="scrim" id="navScrim" hidden></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var pages   = Array.prototype.slice.call(document.querySelectorAll(".page"));
+  var sidebar = document.getElementById("sidebar");
+  var lock    = document.getElementById("lock");
+  var modal   = document.getElementById("modal");
+  var navScrim= document.getElementById("navScrim");
+
+  var state = { signedIn:false, how:"", current:"p-home" };
+
+  /* ---- storage is a convenience only; never required ---- */
+  function remember(k,v){ try{ localStorage.setItem("drmccaa."+k, v); }catch(e){} }
+  function recall(k){ try{ return localStorage.getItem("drmccaa."+k); }catch(e){ return null; } }
+
+  /* ---------- build the sidebar from the sections ---------- */
+  var groups = [];
+  pages.forEach(function(p){
+    var g = p.dataset.group;
+    var bucket = groups.filter(function(x){ return x.name === g; })[0];
+    if(!bucket){ bucket = {name:g, items:[]}; groups.push(bucket); }
+    bucket.items.push(p);
+  });
+
+  var LOCK_SVG = '<svg class="lockicon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2"></rect><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"></path></svg>';
+
+  groups.forEach(function(g){
+    var sec = document.createElement("div");
+    sec.className = "navgroup";
+    var h = document.createElement("h3");
+    h.textContent = g.name;
+    var ul = document.createElement("ul");
+    ul.className = "navlist";
+    g.items.forEach(function(p){
+      var li = document.createElement("li");
+      var a  = document.createElement("a");
+      a.href = "#" + p.id;
+      a.dataset.target = p.id;
+      a.innerHTML =
+        (p.dataset.access === "member" ? LOCK_SVG : "") +
+        '<span class="lbl">' + p.dataset.title + "</span>" +
+        (p.dataset.phase === "2" ? '<span class="key p2">P2</span>' : "");
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    sec.appendChild(h); sec.appendChild(ul);
+    sidebar.appendChild(sec);
+  });
+
+  var navLinks = Array.prototype.slice.call(sidebar.querySelectorAll("a"));
+
+  /* ---------- routing ---------- */
+  function show(id){
+    var target = document.getElementById(id);
+    if(!target){ id = "p-home"; target = document.getElementById(id); }
+    state.current = id;
+
+    var locked = target.dataset.access === "member" && !state.signedIn;
+
+    pages.forEach(function(p){ p.hidden = true; });
+    lock.hidden = true;
+
+    if(locked){
+      document.getElementById("lockPage").textContent = target.dataset.title;
+      lock.hidden = false;
+    } else {
+      target.hidden = false;
+    }
+
+    navLinks.forEach(function(a){
+      if(a.dataset.target === id){ a.setAttribute("aria-current","page"); }
+      else { a.removeAttribute("aria-current"); }
+    });
+
+    window.scrollTo(0,0);
+    closeNav();
+  }
+
+  function route(){
+    var id = (location.hash || "").replace("#","");
+    show(id || "p-home");
+  }
+  window.addEventListener("hashchange", route);
+
+  /* ---------- auth simulation ---------- */
+  var authBtn = document.getElementById("authBtn");
+  var who     = document.getElementById("who");
+  var whoName = document.getElementById("whoName");
+
+  function setSignedIn(on, how){
+    state.signedIn = on;
+    state.how = how || "";
+    authBtn.textContent = on ? "Sign out" : "Sign in";
+    authBtn.classList.toggle("solid", !on);
+    who.hidden = !on;
+    whoName.textContent = how || "";
+    show(state.current);
+  }
+
+  function openModal(){ modal.hidden = false; }
+  function closeModal(){ modal.hidden = true; }
+
+  authBtn.addEventListener("click", function(){
+    if(state.signedIn){ setSignedIn(false); } else { openModal(); }
+  });
+  document.getElementById("modalCancel").addEventListener("click", closeModal);
+  modal.addEventListener("click", function(e){ if(e.target === modal){ closeModal(); } });
+
+  document.addEventListener("click", function(e){
+    var opt = e.target.closest ? e.target.closest("[data-auth]") : null;
+    if(opt){ closeModal(); setSignedIn(true, opt.dataset.auth); return; }
+    if(e.target.closest && e.target.closest("[data-signin]")){ openModal(); }
+  });
+
+  /* ---------- planning notes ---------- */
+  var notesBtn = document.getElementById("notesBtn");
+  function setNotes(on){
+    document.body.classList.toggle("notes-off", !on);
+    notesBtn.setAttribute("aria-pressed", on ? "true" : "false");
+    remember("notes", on ? "1" : "0");
+  }
+  notesBtn.addEventListener("click", function(){
+    setNotes(notesBtn.getAttribute("aria-pressed") !== "true");
+  });
+  setNotes(recall("notes") !== "0");
+
+  /* ---------- theme ---------- */
+  var themeBtn = document.getElementById("themeBtn");
+  themeBtn.addEventListener("click", function(){
+    var now = document.documentElement.getAttribute("data-theme");
+    var isDark = now
+      ? now === "dark"
+      : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var next = isDark ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    remember("theme", next);
+  });
+  var savedTheme = recall("theme");
+  if(savedTheme){ document.documentElement.setAttribute("data-theme", savedTheme); }
+
+  /* ---------- mobile nav ---------- */
+  var navToggle = document.getElementById("navToggle");
+  function openNav(){
+    sidebar.dataset.open = "true";
+    navScrim.hidden = false;
+    navToggle.setAttribute("aria-expanded","true");
+  }
+  function closeNav(){
+    sidebar.dataset.open = "false";
+    navScrim.hidden = true;
+    navToggle.setAttribute("aria-expanded","false");
+  }
+  navToggle.addEventListener("click", function(){
+    if(sidebar.dataset.open === "true"){ closeNav(); } else { openNav(); }
+  });
+  navScrim.addEventListener("click", closeNav);
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape"){ closeNav(); closeModal(); }
+  });
+
+  route();
+})();
+</script>
+</body>
+</html>
